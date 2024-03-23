@@ -1,6 +1,7 @@
 # Virtial Environments
 .venv/*
 venv/*
+.env
 
 # Integrated Development Environments
 .vscode*
