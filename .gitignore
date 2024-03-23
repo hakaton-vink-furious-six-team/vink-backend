@@ -4,6 +4,7 @@ venv/*
 
 # Integrated Development Environments
 .vscode*
+.idea
 
 # backend data
 *.sqlite3
