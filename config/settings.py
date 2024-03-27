@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "apps.chat",
     "apps.admin_user",
     "apps.user_profile",
+    "apps.message",
 ]
 
 MIDDLEWARE = [
