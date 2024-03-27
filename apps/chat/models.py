@@ -44,8 +44,9 @@ class Chat(models.Model):
     def __str__(self):
         return f"Chat {self.id}"
 
-    def close_chat(self):
+    def close_chat(self, rating=None):
         if self.status == "open":
             self.status = "closed"
             self.closed_at = timezone.now()
+            self.rating = rating
             self.save()
