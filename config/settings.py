@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "apps.chat",
+    "apps.admin_user",
 ]
 
 MIDDLEWARE = [
@@ -90,6 +91,8 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "admin_user.CustomUser"
 
 try:
     from .local_settings import *
