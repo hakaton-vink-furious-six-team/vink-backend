@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser):
+    """Кастомная модель пользователя."""
+
     email = models.EmailField(unique=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
