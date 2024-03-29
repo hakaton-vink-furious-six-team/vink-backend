@@ -10,8 +10,8 @@ class Message(models.Model):
         ("user", "Пользователь"),
     )
     sender = models.CharField(max_length=20, choices=SENDER_CHOICES)
-    messages = models.ForeignKey(
-        Chat, on_delete=models.CASCADE, related_name="chat"
+    chat = models.ForeignKey(
+        Chat, on_delete=models.CASCADE, related_name="messages"
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
