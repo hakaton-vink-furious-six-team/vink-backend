@@ -1,7 +1,13 @@
 import asyncio
 import json
+import logging
+from pprint import pprint
 
+from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
+
+from apps.message.models import Message
+from apps.user_profile.models import UserProfile
 
 stop_words = [
     "пока",
@@ -9,13 +15,30 @@ stop_words = [
 ]
 
 
+logger = logging.getLogger(__name__)
+
+
 # class ChatConsumer(WebsocketConsumer):
 class ChatConsumer(AsyncWebsocketConsumer):
-    # groups = ["lobby"]
+    """Реализация функциональности чата."""
+
+    @database_sync_to_async
+    def _save_user_to_db(self, name, phone_number, company_name):
+        user = UserProfile.objects.create(
+            name=name, phone_number=phone_number, company_name=company_name
+        )
+        return user
+
+    @database_sync_to_async
+    def _save_message_to_db(self, text, sender, chat):
+        Message.objects.create(text=text, sender=sender, chat=chat)
 
     async def connect(self):
         # Called on connection.
         # To accept the connection call:
+        room_name = self.scope["url_route"]["kwargs"]["room_name"]
+        logger.info(f"Установлено ws соединение: {room_name}")
+        pprint(self.scope)
         await self.accept()
         await self.send(
             text_data=json.dumps(
@@ -42,4 +65,5 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     async def disconnect(self, close_code):
-        print("Закрытие соединения")  # TODO Добавить логгирование
+        pprint(f"{self.scope}")
+        logger.info("WebSocket закрыт.")
