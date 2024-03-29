@@ -14,7 +14,6 @@ stop_words = [
     "до свидания",
 ]
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -24,14 +23,27 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def _save_user_to_db(self, name, phone_number, company_name):
-        user = UserProfile.objects.create(
+        user = UserProfile.objects.create(  # noqa
+            name=name, phone_number=phone_number, company_name=company_name
+        )
+        user = UserProfile.objects.create(  # noqa
             name=name, phone_number=phone_number, company_name=company_name
         )
         return user
 
+    # async def _save_user_to_db(self, name, phone_number, company_name):
+    #     user = await UserProfile.objects.acreate(  # noqa
+    #         name=name, phone_number=phone_number, company_name=company_name
+    #     )
+    #     user = UserProfile.objects.create(
+    #         name=name, phone_number=phone_number, company_name=company_name
+    #     )
+    #     return user
+
     @database_sync_to_async
     def _save_message_to_db(self, text, sender, chat):
-        Message.objects.create(text=text, sender=sender, chat=chat)
+        message = Message.objects.create(text=text, sender=sender, chat=chat)
+        return message
 
     async def connect(self):
         # Called on connection.
@@ -52,6 +64,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data=None, bytes_data=None):
         text_data_json = json.loads(text_data)
+        pprint(text_data_json)
         message = text_data_json["message"]
         # 4prod
 
@@ -59,11 +72,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(
             text_data=json.dumps({"message": f"Пользователь: {message}"})
         )
-        await asyncio.sleep(10)
+        await asyncio.sleep(2)
         await self.send(
             text_data=json.dumps({"message": "Оператор: а вот и ответ"})
         )
 
     async def disconnect(self, close_code):
-        pprint(f"{self.scope}")
+        # pprint(f"{self.scope}")
         logger.info("WebSocket закрыт.")
