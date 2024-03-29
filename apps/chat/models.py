@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import timezone
 
 from apps.user_profile.models import UserProfile
-from apps.message.models import Message
 
 
 class Chat(models.Model):
@@ -23,9 +22,6 @@ class Chat(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(
         UserProfile, on_delete=models.CASCADE, related_name="chats"
-    )
-    messages = models.ForeignKey(
-        Message, on_delete=models.CASCADE, related_name="chat"
     )
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default="open"
