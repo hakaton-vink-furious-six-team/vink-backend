@@ -42,14 +42,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def _save_message_to_db(self, text, sender, chat):
-        message = Message.objects.create(
+        message = Message.objects.create(  # noqa
             text=text, sender=sender, chat=chat
-        )  # noqa
+        )
         return message
 
     async def connect(self):
-        # Called on connection.
-        # To accept the connection call:
+        """Вызывается при установлении сокет соединения."""
         room_name = self.scope["url_route"]["kwargs"]["room_name"]
         logger.info(f"Установлено ws соединение: {room_name}")
         pprint(self.scope)
