@@ -42,7 +42,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def _save_message_to_db(self, text, sender, chat):
-        message = Message.objects.create(text=text, sender=sender, chat=chat)
+        message = Message.objects.create(
+            text=text, sender=sender, chat=chat
+        )  # noqa
         return message
 
     async def connect(self):
@@ -56,7 +58,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             text_data=json.dumps(
                 {
                     "message": "Здравствуйте, меня зовут Вика.\n"
-                    "Я оператор в компании Vink, буду рада ответить"
+                    "Я оператор в компании Vink, буду рада ответить"  # noqa
                     " на Ваши вопросы."
                 }
             )
