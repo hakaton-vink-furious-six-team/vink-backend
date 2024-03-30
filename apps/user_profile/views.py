@@ -1,3 +1,10 @@
-# from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from apps.user_profile.api_v1.serializers import UserProfileSerializer
+
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = UserProfileSerializer
+    http_method_names = [
+        "post",
+    ]
