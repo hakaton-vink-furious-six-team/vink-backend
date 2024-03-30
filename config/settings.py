@@ -4,8 +4,6 @@ from pathlib import Path
 
 from environs import Env
 
-logger = logging.getLogger(__name__)
-
 env = Env()
 env.read_env()
 
