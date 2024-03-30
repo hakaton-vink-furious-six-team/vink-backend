@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "apps.admin_user",
     "apps.user_profile",
     "apps.message",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,10 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
+}
 
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
