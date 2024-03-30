@@ -1,6 +1,10 @@
+import logging
+import os
 from pathlib import Path
 
 from environs import Env
+
+logger = logging.getLogger(__name__)
 
 env = Env()
 env.read_env()
@@ -81,6 +85,53 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+# logging
+LOG_DIR = os.path.join(BASE_DIR, ".chat_logs")
+LOG_FILE = "/logs.log"
+LOG_PATH = LOG_DIR + LOG_FILE
+
+if not os.path.exists(LOG_DIR):
+    os.mkdir(LOG_DIR)
+
+if not os.path.exists(LOG_PATH):
+    f = open(LOG_PATH, "a").close()
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console": {
+            "format": "{levelname} {asctime} | {pathname} | {funcName} | {message}",  # noqa
+            "style": "{",
+        },
+        "json": {
+            "()": "pythonjsonlogger.jsonlogger.JsonFormatter",  # noqa
+            "format": "{levelname} {asctime} | {pathname} | {funcName} | {message}",  # noqa
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": LOG_PATH,
+            "formatter": "json",
+        },
+        "stream": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "console",
+        },
+    },
+    "loggers": {
+        "apps.chat": {
+            "handlers": ["file", "stream"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
 
 LANGUAGE_CODE = "ru-RU"
 

@@ -3,6 +3,9 @@
 venv/*
 .env
 
+# logging
+/.chat_logs
+
 # Integrated Development Environments
 .vscode*
 .idea
