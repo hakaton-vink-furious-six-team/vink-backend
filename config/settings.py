@@ -1,7 +1,10 @@
+import logging
 import os
 from pathlib import Path
 
 from environs import Env
+
+logger = logging.getLogger(__name__)
 
 env = Env()
 env.read_env()
@@ -15,8 +18,6 @@ DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 INSTALLED_APPS = [
-    "daphne",
-    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -58,7 +59,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "config.wsgi.application"
-ASGI_APPLICATION = "config.asgi.application"
 
 DATABASES = {
     "default": {
