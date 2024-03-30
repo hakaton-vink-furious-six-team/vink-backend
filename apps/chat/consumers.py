@@ -48,11 +48,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         return message
 
     async def connect(self):
-        print("____________________________________________________")
         """Вызывается при установлении сокет соединения."""
+
         room_name = self.scope["url_route"]["kwargs"]["room_name"]
         logger.info(f"Установлено ws соединение: {room_name}")
-        pprint(self.scope)
+        # pprint(self.scope)
         await self.accept()
         await self.send(
             text_data=json.dumps(
@@ -74,11 +74,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(
             text_data=json.dumps({"message": f"Пользователь: {message}"})
         )
+        logger.info(f"Отправлено сообщение: {message}")
         await asyncio.sleep(2)
         await self.send(
             text_data=json.dumps({"message": "Оператор: а вот и ответ"})
         )
+        logger.info("Отправлен ответ: а вот и ответ")
 
     async def disconnect(self, close_code):
-        # pprint(f"{self.scope}")
         logger.info("WebSocket закрыт.")
