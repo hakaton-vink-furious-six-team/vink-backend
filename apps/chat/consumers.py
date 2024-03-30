@@ -48,6 +48,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         return message
 
     async def connect(self):
+        print("____________________________________________________")
         """Вызывается при установлении сокет соединения."""
         room_name = self.scope["url_route"]["kwargs"]["room_name"]
         logger.info(f"Установлено ws соединение: {room_name}")
