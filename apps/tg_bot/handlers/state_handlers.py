@@ -63,7 +63,7 @@ def get_company_name(message: Message, bot: TeleBot):
         tg_user_id = message.from_user.id
         print(name, phone_number, company, tg_user_id)
         try:
-            # from apps.user_profile.models import UserProfile
+            from apps.user_profile.models import UserProfile
 
             UserProfile.objects.create(  # noqa
                 name=name,
