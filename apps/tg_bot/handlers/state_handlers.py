@@ -7,6 +7,7 @@ from telebot import TeleBot, custom_filters  # noqa
 from apps.tg_bot.message_templates.base_messages import BaseMessages
 from apps.tg_bot.states.profile_states import ProfileStateGroup
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -62,7 +63,7 @@ def get_company_name(message: Message, bot: TeleBot):
         tg_user_id = message.from_user.id
         print(name, phone_number, company, tg_user_id)
         try:
-            from apps.user_profile.models import UserProfile
+            # from apps.user_profile.models import UserProfile
 
             UserProfile.objects.create(  # noqa
                 name=name,

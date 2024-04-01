@@ -8,6 +8,7 @@ from apps.tg_bot.handlers.state_handlers import (
     get_phone_number,
 )
 from apps.tg_bot.states.profile_states import ProfileStateGroup
+from apps.tg_bot.handlers.message_handler import bot_message_handler
 
 from config.settings import THREAD_QTY
 from environs import Env
@@ -55,6 +56,11 @@ def register_handlers() -> None:
         state=ProfileStateGroup.get_company,
         pass_bot=True,
         func=None,  # noqa
+    )
+    bot.register_message_handler(
+        bot_message_handler,
+        func=lambda message: message.content_type == "text",
+        pass_bot=True,
     )
 
 
