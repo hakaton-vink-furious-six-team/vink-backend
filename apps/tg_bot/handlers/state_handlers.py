@@ -6,7 +6,7 @@ from telebot import TeleBot, custom_filters  # noqa
 
 from apps.tg_bot.message_templates.base_messages import BaseMessages
 from apps.tg_bot.states.profile_states import ProfileStateGroup
-
+from apps.tg_bot.utils.utils import create_new_user
 
 logger = logging.getLogger(__name__)
 
@@ -61,22 +61,6 @@ def get_company_name(message: Message, bot: TeleBot):
         phone_number = data["phone_number"]
         company = message.text
         tg_user_id = message.from_user.id
-        print(name, phone_number, company, tg_user_id)
-        try:
-            from apps.user_profile.models import UserProfile
-
-            UserProfile.objects.create(  # noqa
-                name=name,
-                phone_number=phone_number,
-                company_name=company,
-                tg_id=tg_user_id,
-            )
-            logger.info(
-                BaseMessages.NEW_USER.format(
-                    name, phone_number, company, tg_user_id
-                )
-            )
-        except Exception as ex:
-            logger.exception(ex)
+        create_new_user(name, phone_number, company, tg_user_id)
 
     bot.delete_state(message.from_user.id, message.chat.id)
