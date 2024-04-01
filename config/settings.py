@@ -24,12 +24,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "apps.tg_bot",
     "apps.chat",
     "apps.admin_user",
     "apps.user_profile",
     "apps.message",
     "rest_framework",
-    "apps.tg_bot",
 ]
 
 MIDDLEWARE = [

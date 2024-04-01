@@ -1,25 +1,11 @@
 import logging
 import re
-import time
 
 from telebot.types import Message  # noqa
 from telebot import TeleBot, custom_filters  # noqa
 
 from apps.tg_bot.message_templates.base_messages import BaseMessages
 from apps.tg_bot.states.profile_states import ProfileStateGroup
-
-
-logger = logging.getLogger(__name__)
-
-
-try:
-    time.sleep(0.5)
-    from apps.user_profile.models import UserProfile
-
-    logger.info("Модель пользователя импортирована")
-except Exception as e:
-    ImportError(e)
-
 
 logger = logging.getLogger(__name__)
 
@@ -75,15 +61,21 @@ def get_company_name(message: Message, bot: TeleBot):
         company = message.text
         tg_user_id = message.from_user.id
         print(name, phone_number, company, tg_user_id)
-        UserProfile.objects.create(  # noqa
-            name=name,
-            phone_number=phone_number,
-            company_name=company,
-            tg_id=tg_user_id,
-        )
-        logger.info(
-            BaseMessages.NEW_USER.format(
-                name, phone_number, company, tg_user_id
+        try:
+            from apps.user_profile.models import UserProfile
+
+            UserProfile.objects.create(  # noqa
+                name=name,
+                phone_number=phone_number,
+                company_name=company,
+                tg_id=tg_user_id,
             )
-        )
+            logger.info(
+                BaseMessages.NEW_USER.format(
+                    name, phone_number, company, tg_user_id
+                )
+            )
+        except Exception as ex:
+            logger.exception(ex)
+
     bot.delete_state(message.from_user.id, message.chat.id)
