@@ -10,12 +10,14 @@ class BotYgptAdmin(admin.ModelAdmin):
     )
     search_fields = 'bot_name', 'model_base',
     list_display_links = 'bot_name',
-    list_editable = 'temperature', 'answer_len',
+    list_editable = 'temperature', 'answer_len', 'promt'
+
 
 class ProjectSettingsAdmin(admin.ModelAdmin):
     list_display = 'active_bot', 'project',
     list_editable = 'active_bot',
     list_display_links = 'project',
+
 
 admin.site.register(BotYgpt, BotYgptAdmin)
 admin.site.register(ProjectSettings, ProjectSettingsAdmin)

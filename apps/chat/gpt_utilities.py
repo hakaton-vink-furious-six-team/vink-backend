@@ -1,4 +1,3 @@
-import asyncio
 from aiohttp import ClientSession
 from django.http import HttpResponse
 from .models import ProjectSettings
@@ -6,6 +5,7 @@ from .models import ProjectSettings
 SORRY_TEXT = (
     'В настоящий момент все операторы заняты, обратитесь пожалуйста позднее.'
 )
+
 
 async def get_gpt_answer(message):
     async with ClientSession() as session:
@@ -17,12 +17,12 @@ async def get_gpt_answer(message):
             "completionOptions": {
                 "stream": False,
                 "temperature": bot.temperature,
-                "maxTokens": str(bot.answer_len)[:-2]
+                "maxTokens": bot.answer_len
             },
             "messages": [{"role": "system", "text": bot.promt}]
         }
         auth = {"Content-Type": "application/json",
-            "Authorization": "Api-Key " + bot.api_key}
+                "Authorization": "Api-Key " + bot.api_key}
         prompt['messages'].append(
             {
                 "role": "system",
@@ -66,5 +66,5 @@ async def ask_run(args):
     }
     begin_conversation.append(user_request)
     answer = await get_gpt_answer(begin_conversation)
-    return HttpResponse(answer)  #  для отладки
+    return HttpResponse(answer)  # для отладки
     # а на проде тут надо возвращать веб-сокетам

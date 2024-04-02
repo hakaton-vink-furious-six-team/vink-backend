@@ -98,7 +98,7 @@ class BotYgpt(models.Model):
         blank=False
     )
     promt = models.CharField(
-        verbose_name='адрес используемой модели',
+        verbose_name='Инструкция к работе',
         max_length=1024,
         default='Ты онлайн консультант в чате поддержки пользователей.'
     )
