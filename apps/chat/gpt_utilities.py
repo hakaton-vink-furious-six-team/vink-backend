@@ -35,10 +35,9 @@ async def get_gpt_answer(message):
         async with session.post(
             url=bot.url_api, headers=auth, json=prompt
         ) as response:
-            js_res = await response.json()
-            answer = js_res.get(
+            json_res = await response.json()
+            return json_res.get(
                 'result')['alternatives'][0]['message']['text']
-            return answer
 
 
 async def ask_run(args):
