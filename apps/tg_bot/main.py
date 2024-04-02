@@ -64,6 +64,9 @@ def register_handlers() -> None:
     )
 
 
+# def base_commands():
+
+
 def bot_starter():
     logger.info("Запуск телеграмм бота.")
     bot.add_custom_filter(custom_filters.StateFilter(bot))
