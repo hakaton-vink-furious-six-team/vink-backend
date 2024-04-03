@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "apps.tg_bot",
     "apps.chat",
     "apps.admin_user",
     "apps.user_profile",
@@ -135,6 +136,11 @@ LOGGING = {
             "level": "DEBUG",
             "propagate": True,
         },
+        "apps.tg_bot": {
+            "handlers": ["file", "stream"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
     },
 }
 
@@ -151,6 +157,8 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "admin_user.CustomUser"
+
+THREAD_QTY = 5
 
 try:
     from .local_settings import *
