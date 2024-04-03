@@ -65,9 +65,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     async def receive(self, text_data=None, bytes_data=None):
+        message_list = []
         text_data_json = json.loads(text_data)
         pprint(text_data_json)
-        message = text_data_json["message"]
+        message = {"role": "user", "text": text_data_json["message"]}
+
+        message_list.append(message)
+
         # 4prod
 
         # 4dev
@@ -80,6 +84,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             text_data=json.dumps({"message": "Оператор: а вот и ответ"})
         )
         logger.info("Отправлен ответ: а вот и ответ")
+        # message = {"role": "assistant", "text": text}
 
     async def disconnect(self, close_code):
         logger.info("WebSocket закрыт.")
