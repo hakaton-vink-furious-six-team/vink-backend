@@ -16,7 +16,7 @@ def bot_message_handler(message: Message, bot: TeleBot):
 
         user = UserProfile.objects.filter(tg_id=user_id)
         if user:
-            bot.send_message(
+            bot.send_message(  # TODO передать список словарей
                 message.chat.id, "Да, абсолютно верно, есть еще вопросы"
             )
         else:
