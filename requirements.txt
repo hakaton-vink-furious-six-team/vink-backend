@@ -4,3 +4,4 @@ psycopg2-binary==2.9.9
 channels[daphne]
 python-json-logger
 djangorestframework==3.15.1
+pyTelegramBotAPI
