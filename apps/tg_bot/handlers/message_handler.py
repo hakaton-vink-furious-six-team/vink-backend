@@ -14,7 +14,7 @@ def bot_message_handler(message: Message, bot: TeleBot):
     try:
         from apps.user_profile.models import UserProfile
 
-        user = UserProfile.objects.filter(tg_id=user_id)
+        user = UserProfile.objects.filter(tg_id=user_id)  # noqa
         if user:
             bot.send_message(  # TODO передать список словарей
                 message.chat.id, "Да, абсолютно верно, есть еще вопросы"

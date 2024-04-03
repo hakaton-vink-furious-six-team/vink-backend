@@ -1,7 +1,12 @@
 import time
 import logging
 
-from apps.tg_bot.handlers.command_handlers import start_process
+from apps.tg_bot.handlers.command_handlers import (
+    start_process,
+    command_help_handler,
+    command_rate_handler,
+    get_rate,
+)
 from apps.tg_bot.handlers.state_handlers import (
     get_company_name,
     get_name,
@@ -9,11 +14,12 @@ from apps.tg_bot.handlers.state_handlers import (
 )
 from apps.tg_bot.states.profile_states import ProfileStateGroup
 from apps.tg_bot.handlers.message_handler import bot_message_handler
+from apps.tg_bot.states.rate_states import GetRateStateGroup
 
 from config.settings import THREAD_QTY
 from environs import Env
 from telebot import TeleBot, StateMemoryStorage, custom_filters  # noqa
-from telebot.types import Message  # noqa
+from telebot.types import Message, BotCommandScopeDefault, BotCommand  # noqa
 
 
 from telebot.handler_backends import StatesGroup, State  # noqa
@@ -40,6 +46,22 @@ def register_handlers() -> None:
         start_process, commands=["start"], pass_bot=True
     )
     bot.register_message_handler(
+        command_help_handler,
+        commands=["help"],
+        pass_bot=True,
+    )
+    bot.register_message_handler(
+        command_rate_handler,
+        commands=["rate"],
+        pass_bot=True,
+    )
+    bot.register_callback_query_handler(
+        get_rate,
+        state=GetRateStateGroup.get_rate,  # noqa
+        pass_bot=True,
+        func=None,  # noqa
+    )
+    bot.register_message_handler(
         get_name,
         state=ProfileStateGroup.get_name,  # noqa
         pass_bot=True,
@@ -64,11 +86,25 @@ def register_handlers() -> None:
     )
 
 
-# def base_commands():
+def menu_commands() -> None:
+    """Меню с базовыми командами."""
+
+    commands = [
+        BotCommand(command="help", description="О работе бота."),
+        BotCommand(
+            command="rate", description="Поставьте оценку работе оператора."
+        ),
+    ]
+    bot.set_my_commands(
+        commands=commands,
+        scope=BotCommandScopeDefault(),
+    )
+    logger.debug("Функция отображения меню запущены")
 
 
 def bot_starter():
     logger.info("Запуск телеграмм бота.")
+    menu_commands()
     bot.add_custom_filter(custom_filters.StateFilter(bot))
     register_handlers()
     bot.remove_webhook()
