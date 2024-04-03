@@ -12,7 +12,7 @@ venv/*
 
 # backend data
 *.sqlite3
-
+/_tg_bot
 # Django stuff:
 *.log
 local_settings.py
