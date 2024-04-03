@@ -1,4 +1,5 @@
 import logging
+import time
 
 from telebot import types, TeleBot  # noqa
 from telebot.types import Message, CallbackQuery  # noqa
@@ -14,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def start_process(message: Message, bot: TeleBot):
     """Обработка команды старт."""
-    #   delete_user(message.from_user.id)  # 4dev TODO убрать перед деплоем
+    # delete_user(message.from_user.id)  # 4dev TODO убрать перед деплоем
     bot.delete_message(chat_id=message.chat.id, message_id=message.id)
     if not check_user_exists(message.from_user.id):
         bot.set_state(
@@ -64,7 +65,9 @@ def get_rate(callback: types.CallbackQuery, bot: TeleBot):
         callback_query_id=callback.id,
         text=BaseMessages.RATE_THX,
     )
+    time.sleep(0.5)
     bot.delete_message(chat_id=chat_id, message_id=callback.message.id)
+
     logger.info(
         f"Пользователь: {callback.from_user.id}"
         f" оставил оценку работе оператора."
