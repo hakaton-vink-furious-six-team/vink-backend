@@ -20,18 +20,60 @@ def check_user_exists(tg_id):
         logger.exception(ex)
 
 
+def get_user(tg_id):
+    """
+    Возвращает объект пользователя из базы по tg.id
+    """
+
+    try:
+        from apps.user_profile.models import UserProfile
+
+        user = UserProfile.objects.get(tg_id=tg_id)
+        return user
+    except Exception as ex:
+        logger.exception(ex)
+
+
 def create_new_user(
     name=None, phone_number=None, company_name=None, tg_id=None
 ):
     try:
         from apps.user_profile.models import UserProfile
 
-        UserProfile.objects.create(  # noqa
+        if UserProfile.objects.filter(
             name=name,
             phone_number=phone_number,
-            company_name=company_name,
-            tg_id=tg_id,
-        )
+        ).exists():
+            user = UserProfile.objects.get(
+                name=name, phone_number=phone_number
+            )
+            user.company_name = (company_name,)
+            user.tg_id = tg_id
+            user.save()
+            logger.info(f"Создан  новый пользователь: {user.name}")
+    except Exception as ex:
+        logger.exception(ex)
+
+
+def get_or_create_chat(user):
+    """Получение объекта открытого чата или создание нового."""
+    try:
+        from apps.chat.models import Chat
+
+        chat = Chat.objects.get_or_create(user=user, is_open=True)  # noqa
+        return chat
+    except Exception as ex:
+        logger.exception(ex)
+
+
+def create_message(chat, sender, message):
+    try:
+        from apps.message.models import Message
+
+        chat = Message.objects.create(
+            chat=chat, sender=sender, text=message
+        )  # noqa
+        return chat
     except Exception as ex:
         logger.exception(ex)
 

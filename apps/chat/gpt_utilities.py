@@ -1,23 +1,37 @@
 from aiohttp import ClientSession
-from django.http import HttpResponse
-from .models import ProjectSettings
+
+# from apps.chat.models import ProjectSettings
 import requests
+
+
+def import_settings():
+    try:
+        from apps.chat.models import ProjectSettings
+
+        return ProjectSettings
+    except Exception as ex:
+        print(ex)
 
 
 SORRY_TEXT = (
     "В настоящий момент все операторы заняты, обратитесь пожалуйста позднее."
 )
-YGPT_API_KEY = "AQVN3w8RT5FZ9zjc1clPFoV6hhJTAo76pg4FyIUv"
+YGPT_API_KEY = "AQVN3w8RT5FZ9zjc1clPFoV6hhJTAo76pg4FyIUv"  # noqa
 CATALOG_ID = "b1gqr96555efj5p78okn"
-PRO = "/yandexgpt/latest"
-LITE = "/yandexgpt-lite/latest"
+PRO = "/yandexgpt/latest"  # noqa
+LITE = "/yandexgpt-lite/latest"  # noqa
 MODEL_URI = "gpt://" + CATALOG_ID + LITE
-URL_COMPL = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
+URL_COMPL = (
+    "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"  # noqa
+)
 
 
 async def get_gpt_answer(message):
     async with ClientSession() as session:
-        setup = ProjectSettings.objects.select_related("active_bot")
+        from apps.chat.models import ProjectSettings
+
+        # ProjectSettings = import_settings()
+        setup = ProjectSettings.objects.select_related("active_bot")  # noqa
         bot = await setup.aget(project="setup")
         bot = bot.active_bot
         prompt = {
@@ -49,35 +63,6 @@ async def get_gpt_answer(message):
         ) as response:
             json_res = await response.json()
             return json_res.get("result")["alternatives"][0]["message"]["text"]
-
-
-async def ask_run(args):
-    # Данные которые нужно получать от фронта
-    USERNAME = "Василий Иванович"
-    PHONE_NUMBER = "+79990014422"
-    DEFAULT_MESSAGE = "У вас картриджи для Epson цветные есть?"
-
-    # << Написать сохранение в БД входящих данных>>
-
-    # Если в базе сообщений не было, то старт общения делать таким
-    begin_conversation = [
-        {
-            "role": "user",
-            "text": f"Здравствуйте, это {USERNAME}."
-            f" Мой телефон {PHONE_NUMBER}.",
-        }
-    ]
-
-    # конструкция для отладки HTTP-запросами
-    question = args.GET.get("ask")
-    if question is None:
-        question = DEFAULT_MESSAGE
-
-    user_request = {"role": "user", "text": question}
-    begin_conversation.append(user_request)
-    answer = await get_gpt_answer(begin_conversation)
-    return HttpResponse(answer)  # для отладки
-    # а на проде тут надо возвращать веб-сокетам
 
 
 def sync_gpt_answer(messages):

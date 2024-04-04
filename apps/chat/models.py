@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
@@ -7,10 +8,6 @@ from apps.user_profile.models import UserProfile
 class Chat(models.Model):
     """Модель чата."""
 
-    STATUS_CHOICES = (
-        ("open", "Открыт"),
-        ("closed", "Закрыт"),
-    )
     RATING_CHOICES = (
         (0, "0"),
         (1, "1"),
@@ -23,9 +20,7 @@ class Chat(models.Model):
     user = models.ForeignKey(
         UserProfile, on_delete=models.CASCADE, related_name="chats"
     )
-    status = models.CharField(
-        max_length=10, choices=STATUS_CHOICES, default="open"
-    )
+    is_open = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     closed_at = models.DateTimeField(blank=True, null=True)
     rating = models.IntegerField(
@@ -33,12 +28,20 @@ class Chat(models.Model):
         blank=True,
         null=True,
         default=3,
-        help_text="Оцените помощь нашего сотрудника по шкале от 0 до 5,"
-        " где 0 - очень плохо, 5 - великолепно.",
+        help_text="Оценка работы оператора от 0 до 5",
     )
 
     def __str__(self):
         return f"Chat {self.id}"
+
+    def clean(self):
+        if (
+            self.status == "open"
+            and Chat.objects.filter(status="open").exists()
+        ):  # noqa
+            raise ValidationError(
+                "Может существовать только один чат со статусом 'open'."
+            )
 
     def close_chat(self, rating=None):
         if self.status == "open":
@@ -48,7 +51,7 @@ class Chat(models.Model):
             self.save()
 
 
-class BotYgpt(models.Model):
+class BotYgpt(models.Model):  # noqa
     bot_name = models.CharField(
         verbose_name="Имя ассистента",
         max_length=32,
@@ -79,7 +82,7 @@ class BotYgpt(models.Model):
     model_base = models.CharField(
         verbose_name="адрес используемой модели",
         max_length=32,
-        default="/yandexgpt-lite/latest",
+        default="/yandexgpt-lite/latest",  # noqa
         null=True,
         blank=True,
     )
@@ -97,7 +100,7 @@ class BotYgpt(models.Model):
         null=False,
         blank=False,
     )
-    promt = models.CharField(
+    promt = models.CharField(  # noqa
         verbose_name="Инструкция к работе",
         max_length=1024,
         default="Ты онлайн консультант в чате поддержки пользователей.",
