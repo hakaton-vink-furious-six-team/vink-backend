@@ -29,7 +29,7 @@ def bot_message_handler(message: Message, bot: TeleBot):
         except Exception as ex:
             logger.exception(ex)
 
-        bot.send_message(message.chat.id, bot_answer)
+        bot.send_message(message.chat.id, bot_answer)  # noqa
     else:
         bot.set_state(
             message.from_user.id,
