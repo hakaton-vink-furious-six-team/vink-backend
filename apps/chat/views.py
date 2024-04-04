@@ -12,7 +12,6 @@ class ChatRatingViewSet(ViewSet):
 
     def create(self, request):
         """По пользователю находим чат и добавляем туда оценку."""
-
         serializer = ChatRatingSerializer(data=request.data)
         if serializer.is_valid():
             user_id = serializer.validated_data["user_id"]
