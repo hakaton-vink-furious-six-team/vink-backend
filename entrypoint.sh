@@ -4,5 +4,5 @@ python manage.py collectstatic --no-input
 
 cp -r /app/collected_static/. /backend/static
 
-# daphne config.wsgi:application
-gunicorn config.wsgi --bind 0.0.0.0:8000
+daphne config.asgi:application
+# gunicorn config.wsgi --bind 0.0.0.0:8000
