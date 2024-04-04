@@ -12,7 +12,7 @@ def check_user_exists(tg_id):
     try:
         from apps.user_profile.models import UserProfile
 
-        user_exists = UserProfile.objects.filter(tg_id=tg_id).exists()
+        user_exists = UserProfile.objects.filter(tg_id=tg_id).exists()  # noqa
         if user_exists:
             return True
         return False
