@@ -14,9 +14,9 @@ pip install -r requirements.txt
 
 ## Документация API
 После запуска сервера доступна по следующим эндпоинтам:
-`api/swagger/` - Swagger API description
-`api/redoc/` - Redoc API description
-`api/doc/` - OpenAPI specification yaml-file download
+- `api/swagger/` - Swagger API description
+- `api/redoc/` - Redoc API description
+- `api/doc/` - OpenAPI specification yaml-file download
 
 
 ### Как настроить проект для запуска:
@@ -32,12 +32,11 @@ cd vink-backend/
 
 - Создайте файл `.env` на основе `.env.examlpe`:
   Установите пароль для доступа к базе данных (`POSTGRES_PASSWORD`),
-  `DJANGO_SECRET_KEY` определите по своему усмотрению.
+  определите по своему усмотрению `DJANGO_SECRET_KEY`.
 
   Добавьте в настройки доменное имя или ip-адрес связанные с вашим сервером,
-  для этого замените значение `ALLOWED_HOSTS` (опционально),
-  или установите значение `localhost,127.0.0.1`, тогда сайт будет доступен только локально,
-  по адресу http://localhost:8000
+  для этого задайте значение `ALLOWED_HOSTS`,
+  или установите значение `localhost,127.0.0.1`, тогда сайт будет доступен только локально
 
 
 ### Запуск проекта
@@ -56,9 +55,9 @@ docker compose up -d
 ```
 docker compose exec -it backend python manage.py createsuperuser
 ```
-проверьте, пройдя на  http://localhost:8000/admin/
+вход в админ-зону по эндпоинту `/admin`
 
 выбрав добавить `Bot YGPT` - назначьте имя ассистенту,
 и заполните необходимые поля для доступа к модели
 
-в разделе Project settings выберите дежурного бота, обязательно сохранив ихменения
+в разделе `Project settings` выберите дежурного бота, обязательно сохранив ихменения
