@@ -22,12 +22,12 @@ def bot_message_handler(message: Message, bot: TeleBot):
             {"role": "user", "text": message.text},
         ]
         user = get_user(message.from_user.id)
-        chat = get_or_create_chat(user)
+        chat, created = get_or_create_chat(user)
         create_message(chat, "user", message.text)
         try:
             bot_answer = sync_gpt_answer(message_list)
             bot.send_message(message.chat.id, bot_answer)
-            create_message(chat, "assistant", message.text)
+            create_message(chat, "assistant", bot_answer)
         except Exception as ex:
             logger.exception(ex)
 

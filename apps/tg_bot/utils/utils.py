@@ -66,14 +66,26 @@ def get_or_create_chat(user):
         logger.exception(ex)
 
 
+def get_chat(user):
+    """Получение объекта открытого чата."""
+    try:
+        from apps.chat.models import Chat
+
+        chat = Chat.objects.get_or_create(user=user, is_open=True)  # noqa
+        return chat
+    except Exception as ex:
+        logger.exception(ex)
+
+
 def create_message(chat, sender, message):
     try:
         from apps.message.models import Message
 
-        chat = Message.objects.create(
+        logger.info(chat)
+        message = Message.objects.create(  # noqa
             chat=chat, sender=sender, text=message
-        )  # noqa
-        return chat
+        )
+        return message
     except Exception as ex:
         logger.exception(ex)
 
