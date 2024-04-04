@@ -43,11 +43,10 @@ class Chat(models.Model):
                 "Может существовать только один чат со статусом 'open'."
             )
 
-    def close_chat(self, rating=None):
+    def close_chat(self):
         if self.status == "open":
             self.status = "closed"
             self.closed_at = timezone.now()
-            self.rating = rating
             self.save()
 
 

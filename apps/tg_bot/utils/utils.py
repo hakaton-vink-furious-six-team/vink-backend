@@ -71,7 +71,9 @@ def get_chat(user):
     try:
         from apps.chat.models import Chat
 
-        chat = Chat.objects.get_or_create(user=user, is_open=True)  # noqa
+        chat, created = Chat.objects.get_or_create(
+            user=user, is_open=True
+        )  # noqa
         return chat
     except Exception as ex:
         logger.exception(ex)
