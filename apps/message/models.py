@@ -6,8 +6,8 @@ from apps.chat.models import Chat
 class Message(models.Model):
     text = models.TextField()
     SENDER_CHOICES = (
-        ("assistant", "Ассистент"),
-        ("user", "Пользователь"),
+        ("assistant", "system"),
+        ("user", "user"),
     )
     sender = models.CharField(max_length=20, choices=SENDER_CHOICES)
     chat = models.ForeignKey(
