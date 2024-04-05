@@ -51,6 +51,13 @@ def create_new_user(
             user.tg_id = tg_id
             user.save()
             logger.info(f"Создан  новый пользователь: {user.name}")
+        else:
+            UserProfile.objects.create(
+                name=name,
+                phone_number=phone_number,
+                company_name=company_name,
+                tg_id=tg_id,
+            )
     except Exception as ex:
         logger.exception(ex)
 
