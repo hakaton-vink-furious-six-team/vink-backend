@@ -91,9 +91,9 @@ def create_message(chat, sender, message):
         from apps.message.models import Message
 
         logger.info(chat)
-        message = Message.objects.create(  # noqa
+        message = Message.objects.create(
             chat=chat, sender=sender, text=message
-        )
+        )  # noqa
         return message
     except Exception as ex:
         logger.exception(ex)
