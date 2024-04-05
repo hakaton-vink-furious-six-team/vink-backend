@@ -1,10 +1,7 @@
-import logging
 import os
 from pathlib import Path
 
 from environs import Env
-
-logger = logging.getLogger(__name__)
 
 env = Env()
 env.read_env()
@@ -18,24 +15,28 @@ DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 INSTALLED_APPS = [
+    "daphne",
+    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "apps.tg_bot",
     "apps.chat",
     "apps.admin_user",
     "apps.user_profile",
     "apps.message",
     "rest_framework",
-    "drf_spectacular"
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -63,17 +64,18 @@ TEMPLATES = [
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Vink-bot Swagger API',
-    'DESCRIPTION': 'Vink-bot Swagger API description',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
+    "TITLE": "Vink-bot Swagger API",
+    "DESCRIPTION": "Vink-bot Swagger API description",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 
 WSGI_APPLICATION = "config.wsgi.application"
+ASGI_APPLICATION = "config.asgi.application"
 
 DATABASES = {
     "default": {
@@ -152,6 +154,7 @@ LOGGING = {
         },
     },
 }
+CORS_ALLOW_ALL_ORIGINS = True
 
 LANGUAGE_CODE = "ru-RU"
 
@@ -161,9 +164,9 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = '/backend/static/'
+STATIC_URL = "/backend/static/"
 
-STATIC_ROOT = BASE_DIR / 'collected_static'
+STATIC_ROOT = BASE_DIR / "collected_static"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

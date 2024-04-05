@@ -3,15 +3,15 @@ from drf_spectacular import views as specview
 
 
 urlpatterns = [
-    path('doc/', specview.SpectacularAPIView.as_view(), name='schema'),
+    path("doc/", specview.SpectacularAPIView.as_view(), name="schema"),
     path(
-        'swagger/',
-        specview.SpectacularSwaggerView.as_view(url_name='schema'),
-        name='swagger'
+        "swagger/",
+        specview.SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger",
     ),
     path(
-        'redoc/',
-        specview.SpectacularRedocView.as_view(url_name='schema'),
-        name='redoc'
-    )
+        "redoc/",
+        specview.SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
+    ),
 ]
