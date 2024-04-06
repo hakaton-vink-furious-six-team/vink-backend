@@ -12,13 +12,14 @@ from apps.tg_bot.utils.utils import (
     check_user_exists,
     get_user,
     get_chat,
-)  # , delete_user
+)
 
 logger = logging.getLogger(__name__)
 
 
 def start_process(message: Message, bot: TeleBot):
     """Обработка команды старт."""
+
     bot.delete_message(chat_id=message.chat.id, message_id=message.id)
     if not check_user_exists(message.from_user.id):
         bot.set_state(
@@ -31,6 +32,7 @@ def start_process(message: Message, bot: TeleBot):
 
 def command_help_handler(message: types.Message, bot: TeleBot):
     """Ответ на выбор меню help."""
+
     bot.delete_message(chat_id=message.chat.id, message_id=message.id)
     bot.send_message(
         chat_id=message.chat.id,
@@ -41,6 +43,7 @@ def command_help_handler(message: types.Message, bot: TeleBot):
 
 def command_rate_handler(message: types.Message, bot: TeleBot):
     """Оценка работы оператора /rate."""
+
     user_id = message.from_user.id
     chat_id = message.chat.id
     message_id = message.id
@@ -68,22 +71,12 @@ def get_rate(callback: types.CallbackQuery, bot: TeleBot):
         callback_query_id=callback.id,
         text=BaseMessages.RATE_THX,
     )
-    # print(f"_______________+++{callback.data}")
-    # with bot.retrieve_data(
-    #     user_id=callback.from_user.id, chat_id=chat_id
-    # ) as data:
-    #     print(callback.data)
     rate = callback.data
     rate_value = rate.split(":")[1]
-    logger.info(rate_value)
     user = get_user(callback.from_user.id)
-    logger.info(user)
     chat = get_chat(user)
-    logger.info(chat)
     chat.rating = rate_value
     chat.save()
-    logger.info(chat.rating)
-    logger.info(rate_value)
 
     time.sleep(0.5)
     bot.delete_message(chat_id=chat_id, message_id=callback.message.id)

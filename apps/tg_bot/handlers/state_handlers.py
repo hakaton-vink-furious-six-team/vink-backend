@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 def get_name(message: Message, bot: TeleBot):
     """
-    Записываем имя.
+    Записываем имя, переходим в состояние записи телефона.
     """
     bot.send_message(message.chat.id, BaseMessages.FILL_PHONE_NUMBER)
     bot.set_state(
@@ -23,11 +23,13 @@ def get_name(message: Message, bot: TeleBot):
     )
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data["name"] = message.text
+    logger.info("Состояние введите имя.")
 
 
 def get_phone_number(message: Message, bot: TeleBot):
     """
-    Записываем номер телефона.
+    Записываем номер телефона, проверяем корректность введенной информации.
+    Переходим в состояние ввода названия компании.
     """
     if re.match(r"^\+\d{7,15}$", message.text):
         bot.send_message(message.chat.id, "Напишите название компании.")
@@ -38,12 +40,18 @@ def get_phone_number(message: Message, bot: TeleBot):
         )
         with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
             data["phone_number"] = message.text
+        logger.info("Номер телефона введен корректно.")
+
     else:
         bot.send_message(message.chat.id, BaseMessages.WRONG_PHONE_NUMBER)
         bot.set_state(
             message.from_user.id,
             ProfileStateGroup.get_phone_number,
             message.chat.id,
+        )
+        logger.info(
+            "Номер телефона введен не корректно,"
+            " предложено повторно ввести номер."
         )
 
 
@@ -62,5 +70,6 @@ def get_company_name(message: Message, bot: TeleBot):
         company = message.text
         tg_user_id = message.from_user.id
         create_new_user(name, phone_number, company, tg_user_id)
+        logger.info("Новый пользователь создан.")
 
     bot.delete_state(message.from_user.id, message.chat.id)

@@ -17,6 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 def bot_message_handler(message: Message, bot: TeleBot):
+    """Обработка стандартных текстовых сообщений."""
+    # Если пользователь уже есть в бд
     if check_user_exists(message.from_user.id):
         message_list = [
             {"role": "user", "text": message.text},
@@ -28,9 +30,10 @@ def bot_message_handler(message: Message, bot: TeleBot):
             bot_answer = sync_gpt_answer(message_list)
             bot.send_message(message.chat.id, bot_answer)
             create_message(chat, "assistant", bot_answer)
+            logger.info("Ответ бота записан в бд")
         except Exception as ex:
             logger.exception(ex)
-
+    # Если новый пользователь
     else:
         bot.set_state(
             message.from_user.id,
