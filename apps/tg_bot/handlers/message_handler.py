@@ -26,6 +26,7 @@ def bot_message_handler(message: Message, bot: TeleBot):
         user = get_user(message.from_user.id)
         chat, created = get_or_create_chat(user)
         create_message(chat, "user", message.text)
+        logger.info("Ответ пользователя записан в бд")
         try:
             bot_answer = sync_gpt_answer(message_list)
             bot.send_message(message.chat.id, bot_answer)
@@ -33,6 +34,7 @@ def bot_message_handler(message: Message, bot: TeleBot):
             logger.info("Ответ бота записан в бд")
         except Exception as ex:
             logger.exception(ex)
+
     # Если новый пользователь
     else:
         bot.set_state(
@@ -41,3 +43,4 @@ def bot_message_handler(message: Message, bot: TeleBot):
             message.chat.id,
         )
         bot.send_message(message.chat.id, BaseMessages.FILL_NAME)
+        logger.info("Новый пользователь отправлен на регистрацию.")

@@ -103,7 +103,7 @@ def menu_commands() -> None:
 
 
 def bot_starter():
-    logger.info("Запуск телеграмм бота.")
+    logger.info("Запуск телеграмм бота >")
     menu_commands()
     bot.add_custom_filter(custom_filters.StateFilter(bot))
     register_handlers()
@@ -114,4 +114,4 @@ def bot_starter():
         drop_pending_updates=True,
         allowed_updates=["*"],
     )
-    logger.info("Бот запущен.>")
+    logger.info("Бот запущен >>>")

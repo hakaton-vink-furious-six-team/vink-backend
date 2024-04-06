@@ -26,8 +26,13 @@ def start_process(message: Message, bot: TeleBot):
             message.from_user.id, ProfileStateGroup.get_name, message.chat.id
         )
         bot.send_message(message.chat.id, BaseMessages.FILL_NAME)
+        logger.info(
+            "После команды старт новый пользователь"
+            " отправлен на регистрацию."
+        )
     else:
         bot.send_message(message.chat.id, BaseMessages.IM_READY)
+        logger.info("После команды старт пользователь распознан.")
 
 
 def command_help_handler(message: types.Message, bot: TeleBot):
