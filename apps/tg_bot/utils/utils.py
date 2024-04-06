@@ -103,19 +103,3 @@ def create_message(chat, sender, message):
         return message
     except Exception as ex:
         logger.exception(ex)
-
-
-# 4dev
-def delete_user(tg_id):
-    """
-    Удаляет пользователя с указанным tg_id из базы данных.
-    """
-
-    try:
-        from apps.user_profile.models import UserProfile
-
-        user = UserProfile.objects.get(tg_id=tg_id)  # noqa
-        user.delete()
-        logger.info("Пользователь удален из базы данных")
-    except Exception as ex:
-        logger.exception(ex)
