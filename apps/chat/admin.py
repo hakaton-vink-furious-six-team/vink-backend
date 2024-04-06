@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import BotYgpt, ProjectSettings
+from apps.chat.models import BotYgpt, ProjectSettings, Chat
 
 
 class BotYgptAdmin(admin.ModelAdmin):
@@ -33,3 +33,21 @@ class ProjectSettingsAdmin(admin.ModelAdmin):
 
 admin.site.register(BotYgpt, BotYgptAdmin)
 admin.site.register(ProjectSettings, ProjectSettingsAdmin)
+
+
+@admin.register(Chat)
+class ChatAdmin(admin.ModelAdmin):
+    """Админ панель для"""
+
+    list_display = (
+        "id",
+        "is_open",
+        "user",
+        "rating",
+        "created_at",
+        "closed_at",
+    )
+    list_display_links = ("id",)
+    list_editable = ("is_open",)
+    search_fields = ("user__name",)
+    search_help_text = "Поиск по имени пользователя."
