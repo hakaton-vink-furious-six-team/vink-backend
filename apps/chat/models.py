@@ -47,9 +47,10 @@ class Chat(models.Model):
                 "Может существовать только один чат со статусом 'open'."
             )
 
+    # @sync_to_async
     def close_chat(self):
         if self.is_open:
-            self.status = False
+            self.is_open = False
             self.closed_at = timezone.now()
             self.save()
 

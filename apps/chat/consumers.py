@@ -1,6 +1,7 @@
 import json
 import logging
 
+from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 from apps.chat.gpt_utilities import get_gpt_answer
@@ -73,5 +74,5 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         room_name = self.scope["url_route"]["kwargs"]["room_name"]
         chat = await Chat.objects.aget(user=room_name, is_open=True)  # noqa
-        chat.close_chat()
+        await sync_to_async(chat.close_chat)()  # noqa
         logger.info(f"WebSocket закрыт. результаты чата: {self.message_list}")
