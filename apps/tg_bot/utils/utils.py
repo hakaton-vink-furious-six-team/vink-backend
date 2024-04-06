@@ -46,9 +46,9 @@ def create_new_user(
             name=name,
             phone_number=phone_number,
         ).exists():
-            user = UserProfile.objects.get(  # noqa
+            user = UserProfile.objects.get(
                 name=name, phone_number=phone_number
-            )
+            )  # noqa
             user.company_name = (company_name,)
             user.tg_id = tg_id
             user.save()
@@ -97,9 +97,9 @@ def create_message(chat, sender, message):
         from apps.message.models import Message
 
         logger.info(chat)
-        message = Message.objects.create(  # noqa
+        message = Message.objects.create(
             chat=chat, sender=sender, text=message
-        )
+        )  # noqa
         return message
     except Exception as ex:
         logger.exception(ex)

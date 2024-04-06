@@ -51,9 +51,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # создаем новый объект сообщения.
         room_name = self.scope["url_route"]["kwargs"]["room_name"]
         chat = await Chat.objects.aget(user=room_name, is_open=True)  # noqa
-        await Message.objects.acreate(  # noqa
+        await Message.objects.acreate(
             sender="user", text=message, chat=chat
-        )
+        )  # noqa
         logger.info(f"Сообщение от пользователя: {message}")
 
         # Отправляем запрос ygpt, полученный ответ отдаем пользователю.
