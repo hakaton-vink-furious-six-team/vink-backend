@@ -1,0 +1,8 @@
+.env
+.venv
+.vscode
+.chat_logs
+venv
+db.sqlite3
+config/local_settings
+local_settings.py
