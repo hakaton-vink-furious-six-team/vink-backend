@@ -8,10 +8,6 @@ from apps.chat.models import Chat
 from apps.message.models import Message
 from apps.user_profile.models import UserProfile
 
-stop_words = [
-    "пока",
-    "до свидания",
-]
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +30,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(
             text_data=json.dumps(
                 {
-                    "message": "Здравствуйте , меня зовут Вика.\n"
+                    "message": f"Здравствуйте {user.name}, меня зовут Вика.\n"
                     "Я оператор в компании Vink, буду рада ответить"  # noqa
                     " на Ваши вопросы."
                 }
@@ -50,17 +46,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = text_data_json["message"]
         message_dict = {"role": "user", "text": message}
         self.message_list.append(message_dict)
-        await self.send(
-            text_data=json.dumps({"message": f"Пользователь: {message}"})
-        )  # для отладки
 
         # Получаем id пользователя - название комнаты,
         # создаем новый объект сообщения.
         room_name = self.scope["url_route"]["kwargs"]["room_name"]
         chat = await Chat.objects.aget(user=room_name, is_open=True)  # noqa
-        await Message.objects.acreate(
+        await Message.objects.acreate(  # noqa
             sender="user", text=message, chat=chat
-        )  # noqa
+        )
         logger.info(f"Сообщение от пользователя: {message}")
 
         # Отправляем запрос ygpt, полученный ответ отдаем пользователю.
@@ -68,9 +61,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
             gpt_answer = await get_gpt_answer(self.message_list)
             logger.info(gpt_answer)
             await self.send(text_data=json.dumps({"message": gpt_answer}))
-            await Message.objects.acreate(
+            await Message.objects.acreate(  # noqa
                 sender="assistant", text=gpt_answer, chat=chat
-            )  # noqa
+            )
             logger.info(gpt_answer)
         except Exception as ex:
             logger.exception(ex)
@@ -79,7 +72,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         """Закрытие сокет соединения."""
 
         room_name = self.scope["url_route"]["kwargs"]["room_name"]
-        logger.info(f"Установлено ws соединение: {room_name}")
         chat = await Chat.objects.aget(user=room_name, is_open=True)  # noqa
         chat.close_chat()
-        logger.info(f"WebSocket закрыт. результаты чата {self.message_list}")
+        logger.info(f"WebSocket закрыт. результаты чата: {self.message_list}")
