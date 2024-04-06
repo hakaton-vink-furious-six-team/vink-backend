@@ -13,7 +13,10 @@ from apps.tg_bot.handlers.state_handlers import (
     get_phone_number,
 )
 from apps.tg_bot.states.profile_states import ProfileStateGroup
-from apps.tg_bot.handlers.message_handler import bot_message_handler
+from apps.tg_bot.handlers.message_handler import (
+    bot_message_handler,
+    not_valid_message_handler,
+)
 from apps.tg_bot.states.rate_states import GetRateStateGroup
 
 from config.settings import THREAD_QTY
@@ -84,6 +87,11 @@ def register_handlers() -> None:
         func=lambda message: message.content_type == "text",
         pass_bot=True,
     )
+    bot.register_message_handler(
+        not_valid_message_handler,
+        func=lambda message: message.content_type != "text",
+        pass_bot=True,
+    )
 
 
 def menu_commands() -> None:
@@ -103,7 +111,7 @@ def menu_commands() -> None:
 
 
 def bot_starter():
-    logger.info("Запуск телеграмм бота.")
+    logger.info("Запуск телеграмм бота >")
     menu_commands()
     bot.add_custom_filter(custom_filters.StateFilter(bot))
     register_handlers()
@@ -114,4 +122,4 @@ def bot_starter():
         drop_pending_updates=True,
         allowed_updates=["*"],
     )
-    logger.info("Бот запущен.>")
+    logger.info("Бот запущен >>>")

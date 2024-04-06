@@ -34,6 +34,10 @@ class Chat(models.Model):
     def __str__(self):
         return f"Chat {self.id}"
 
+    class Meta:
+        verbose_name = "Чат"
+        verbose_name_plural = "Чаты"
+
     def clean(self):
         if (
             self.status == "open"

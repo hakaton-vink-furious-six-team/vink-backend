@@ -9,6 +9,8 @@ class RateKeyboard:
 
     @classmethod
     def cancel_button(cls):
+        """Кнопка отмены"""
+
         button = InlineKeyboardButton(
             text="❌ Отменить.",
             callback_data="cancel",
@@ -17,6 +19,8 @@ class RateKeyboard:
 
     @classmethod
     def rate_keyboard(cls):
+        """Клавиатура для оценки рейтинга"""
+
         rate_dict = [
             ("0️⃣", 0),
             ("1️⃣", 1),
