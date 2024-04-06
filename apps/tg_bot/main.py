@@ -13,7 +13,10 @@ from apps.tg_bot.handlers.state_handlers import (
     get_phone_number,
 )
 from apps.tg_bot.states.profile_states import ProfileStateGroup
-from apps.tg_bot.handlers.message_handler import bot_message_handler
+from apps.tg_bot.handlers.message_handler import (
+    bot_message_handler,
+    not_valid_message_handler,
+)
 from apps.tg_bot.states.rate_states import GetRateStateGroup
 
 from config.settings import THREAD_QTY
@@ -82,6 +85,11 @@ def register_handlers() -> None:
     bot.register_message_handler(
         bot_message_handler,
         func=lambda message: message.content_type == "text",
+        pass_bot=True,
+    )
+    bot.register_message_handler(
+        not_valid_message_handler,
+        func=lambda message: message.content_type != "text",
         pass_bot=True,
     )
 

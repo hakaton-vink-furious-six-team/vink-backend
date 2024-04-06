@@ -49,23 +49,36 @@ def command_help_handler(message: types.Message, bot: TeleBot):
 def command_rate_handler(message: types.Message, bot: TeleBot):
     """Оценка работы оператора /rate."""
 
-    user_id = message.from_user.id
-    chat_id = message.chat.id
-    message_id = message.id
-    bot.delete_message(chat_id=chat_id, message_id=message_id)
-    bot.send_message(
-        chat_id=message.from_user.id,
-        text=BaseMessages.RATE_FIRST_MESSAGE,
-        reply_markup=RateKeyboard.rate_keyboard(),
-    )
-    bot.set_state(
-        user_id=user_id,
-        state=GetRateStateGroup.get_rate,
-        chat_id=chat_id,
-    )
-    logger.debug(
-        f"Пользователь: {user_id} перешел в состояние оценки работы оператора."
-    )
+    # Если пользователь зарегистрирован, разрешаем ему оценить работу бота.
+    if check_user_exists(message.from_user.id):
+        user_id = message.from_user.id
+        chat_id = message.chat.id
+        message_id = message.id
+        bot.delete_message(chat_id=chat_id, message_id=message_id)
+        bot.send_message(
+            chat_id=message.from_user.id,
+            text=BaseMessages.RATE_FIRST_MESSAGE,
+            reply_markup=RateKeyboard.rate_keyboard(),
+        )
+        bot.set_state(
+            user_id=user_id,
+            state=GetRateStateGroup.get_rate,
+            chat_id=chat_id,
+        )
+        logger.debug(
+            f"Пользователь: {user_id} перешел в состояние"
+            f" оценки работы оператора."
+        )
+
+    # Если новый пользователь
+    else:
+        bot.set_state(
+            message.from_user.id,
+            ProfileStateGroup.get_name,
+            message.chat.id,
+        )
+        bot.send_message(message.chat.id, BaseMessages.AUTH_THAN_DO)
+        logger.info("Новый пользователь отправлен на регистрацию.")
 
 
 def get_rate(callback: types.CallbackQuery, bot: TeleBot):

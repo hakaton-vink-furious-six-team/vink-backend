@@ -44,3 +44,13 @@ def bot_message_handler(message: Message, bot: TeleBot):
         )
         bot.send_message(message.chat.id, BaseMessages.FILL_NAME)
         logger.info("Новый пользователь отправлен на регистрацию.")
+
+
+def not_valid_message_handler(message: types.Message, bot: TeleBot):
+    """Хендлер не текстовых сообщений"""
+
+    bot.send_message(
+        chat_id=message.chat.id,
+        text=BaseMessages.NOT_VALID_MESSAGE,
+    )
+    logger.info("Пользователь отправил не текстовое сообщение")
