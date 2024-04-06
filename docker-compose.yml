@@ -25,5 +25,7 @@ services:
     env_file: .env
     volumes:
       - static:/backend/
+    depends_on:
+      - backend
     ports:
       - 80:80

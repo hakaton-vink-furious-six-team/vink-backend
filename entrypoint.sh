@@ -4,4 +4,4 @@ python manage.py collectstatic --no-input
 
 cp -r /app/collected_static/. /backend/static
 
-daphne config.asgi:application
+daphne -b 0.0.0.0 config.asgi:application
