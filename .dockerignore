@@ -4,7 +4,6 @@
 .chat_logs
 venv
 db.sqlite3
-config\local_settings.py
 
 /.chat_logs
 *.log
@@ -12,3 +11,6 @@ config\local_settings.py
 __pycache__/
 *.py[cod]
 *$py.class
+
+config/local_settings
+local_settings.py
