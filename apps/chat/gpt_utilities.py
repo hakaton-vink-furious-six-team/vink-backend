@@ -33,21 +33,17 @@ async def get_gpt_answer(message):
                 "temperature": bot.temperature,
                 "maxTokens": bot.answer_len,
             },
-            "messages": [{"role": "system", "text": bot.promt}],
+            "messages": [
+                {"role": "system", "text": bot.promt + (
+                    f" Тебя зовут {bot.bot_name}. "
+                    "Отвечай как в чате, коротко."
+                )}
+            ],
         }
         auth = {
             "Content-Type": "application/json",
             "Authorization": "Api-Key " + bot.api_key,
         }
-        prompt["messages"].append(
-            {
-                "role": "system",
-                "text": (
-                    f"Тебя зовут {bot.bot_name}. "
-                    "Отвечай как в чате, коротко."
-                ),
-            }
-        )
         prompt["messages"].extend(message)
 
         async with session.post(
