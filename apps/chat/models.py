@@ -40,16 +40,17 @@ class Chat(models.Model):
 
     def clean(self):
         if (
-            self.status == "open"
-            and Chat.objects.filter(status="open").exists()
-        ):  # noqa
+            self.is_open == "open"
+            and Chat.objects.filter(status="open").exists()  # noqa
+        ):
             raise ValidationError(
                 "Может существовать только один чат со статусом 'open'."
             )
 
+    # @sync_to_async
     def close_chat(self):
-        if self.status == "open":
-            self.status = "closed"
+        if self.is_open:
+            self.is_open = False
             self.closed_at = timezone.now()
             self.save()
 
@@ -138,4 +139,4 @@ class ProjectSettings(models.Model):
     )
 
     def __str__(self) -> str:
-        return self.active_bot.bot_name
+        return self.active_bot.bot_name  # noqa

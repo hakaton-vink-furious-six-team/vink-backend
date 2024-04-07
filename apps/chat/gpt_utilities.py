@@ -4,15 +4,6 @@ from aiohttp import ClientSession
 import requests
 
 
-def import_settings():
-    try:
-        from apps.chat.models import ProjectSettings
-
-        return ProjectSettings
-    except Exception as ex:
-        print(ex)
-
-
 SORRY_TEXT = (
     "В настоящий момент все операторы заняты, обратитесь пожалуйста позднее."
 )
@@ -30,7 +21,6 @@ async def get_gpt_answer(message):
     async with ClientSession() as session:
         from apps.chat.models import ProjectSettings
 
-        # ProjectSettings = import_settings()
         setup = ProjectSettings.objects.select_related("active_bot")  # noqa
         bot = await setup.aget(project="setup")
         bot = bot.active_bot
