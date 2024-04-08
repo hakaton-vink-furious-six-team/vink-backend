@@ -16,4 +16,4 @@ class MessageAdmin(admin.ModelAdmin):
     )
     list_display_links = ("id",)
     search_fields = ("created_at",)
-    search_help_text = "Поиск по дате создания"
+    search_help_text = "Поиск по дате создания в формате ГГГГ-ММ-ДД"
