@@ -106,7 +106,7 @@ class BotYgpt(models.Model):  # noqa
     )
     promt = models.CharField(  # noqa
         verbose_name="Инструкция к работе",
-        max_length=1024,
+        max_length=2024,
         default="Ты онлайн консультант в чате поддержки пользователей.",
     )
     url_api = models.CharField(
