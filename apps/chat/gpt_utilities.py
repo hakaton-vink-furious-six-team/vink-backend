@@ -20,6 +20,7 @@ URL_COMPL = (
 
 async def get_gpt_answer(message):
     from apps.chat.consumers import logger
+
     async with ClientSession() as session:
         from apps.chat.models import ProjectSettings
 
@@ -34,10 +35,14 @@ async def get_gpt_answer(message):
                 "maxTokens": bot.answer_len,
             },
             "messages": [
-                {"role": "system", "text": bot.promt + (
-                    f" Тебя зовут {bot.bot_name}. "
-                    "Отвечай как в чате, коротко."
-                )}
+                {
+                    "role": "system",
+                    "text": bot.promt
+                    + (
+                        f" Тебя зовут {bot.bot_name}. "
+                        "Отвечай как в чате, коротко."
+                    ),
+                }
             ],
         }
         auth = {
@@ -56,7 +61,7 @@ async def get_gpt_answer(message):
             except Exception as ex:
                 error = json_res.get("error")
                 if error is not None:
-                    logger.error(error['message'])
+                    logger.error(error["message"])
                 logger.exception(ex)
                 answer = SORRY_TEXT
             return answer

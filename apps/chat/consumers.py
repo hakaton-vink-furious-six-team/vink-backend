@@ -39,8 +39,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data=None, bytes_data=None):
         """Обработка входящих сообщений. Входящие сообщения и ответы к ним
-          записываются в message_list для поддержания контекста диалога.
-          Дополнительно все реплики сохраняются в базу данных.
+        записываются в message_list для поддержания контекста диалога.
+        Дополнительно все реплики сохраняются в базу данных.
         """
 
         text_data_json = json.loads(text_data)
@@ -77,5 +77,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         room_name = self.scope["url_route"]["kwargs"]["room_name"]
         chat = await Chat.objects.aget(user=room_name, is_open=True)  # noqa
         await sync_to_async(chat.close_chat)()  # noqa
-        logger.info(f"WebSocket '/{room_name}' закрыт. результаты чата:"
-                    f" {self.message_list.pop(room_name)}")
+        logger.info(
+            f"WebSocket '/{room_name}' закрыт. результаты чата:"
+            f" {self.message_list.pop(room_name)}"
+        )
