@@ -2,15 +2,13 @@ import csv
 
 from django.http import HttpResponse
 from django.utils.encoding import smart_str
-
-from apps.chat.models import BotYgpt, ProjectSettings, Chat
-
-
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.db.models import DateField
 from openpyxl import Workbook
+
+from apps.chat.models import BotYgpt, ProjectSettings, Chat
 
 
 class BotYgptAdmin(admin.ModelAdmin):

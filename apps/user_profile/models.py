@@ -14,7 +14,7 @@ class UserProfile(models.Model):
     phone_number = models.CharField(validators=[phone_regex], max_length=15)
     company_name = models.CharField(max_length=100, blank=True, null=True)
     date_added = models.DateTimeField(auto_now=True)
-    tg_id = models.SmallIntegerField(blank=True, null=True)
+    tg_id = models.BigIntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.name}, тел: {self.phone_number}"
