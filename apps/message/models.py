@@ -4,9 +4,11 @@ from apps.chat.models import Chat
 
 
 class Message(models.Model):
+    """Модель сообщения."""
+
     text = models.TextField()
     SENDER_CHOICES = (
-        ("assistant", "system"),
+        ("assistant", "assistant"),
         ("user", "user"),
     )
     sender = models.CharField(max_length=20, choices=SENDER_CHOICES)
@@ -17,3 +19,7 @@ class Message(models.Model):
 
     def __str__(self):
         return f"{self.sender}: {self.text}"
+
+    class Meta:
+        verbose_name = "Сообщение"
+        verbose_name_plural = "Сообщения"

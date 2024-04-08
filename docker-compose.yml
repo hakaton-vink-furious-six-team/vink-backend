@@ -1,0 +1,31 @@
+version: '3.3'
+
+volumes:
+  pg_data:
+  static:
+
+services:
+
+  db:
+    image: postgres:13
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+
+  backend:
+    image: acunathink/vink_backend
+    env_file: .env
+    volumes:
+      - static:/backend/
+    depends_on:
+      - db
+
+  nginx:
+    image: acunathink/vink_gateway
+    env_file: .env
+    volumes:
+      - static:/backend/
+    depends_on:
+      - backend
+    ports:
+      - 80:80

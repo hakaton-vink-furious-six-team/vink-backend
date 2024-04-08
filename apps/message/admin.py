@@ -1,3 +1,19 @@
-# from django.contrib import admin
+from django.contrib import admin
 
-# Register your models here.
+from apps.message.models import Message
+
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    """Админ панель для"""
+
+    list_display = (
+        "id",
+        "created_at",
+        "chat",
+        "sender",
+        "text",
+    )
+    list_display_links = ("id",)
+    search_fields = ("created_at",)
+    search_help_text = "Поиск по дате создания в формате ГГГГ-ММ-ДД"

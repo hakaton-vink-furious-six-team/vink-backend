@@ -34,18 +34,23 @@ class Chat(models.Model):
     def __str__(self):
         return f"Chat {self.id}"
 
+    class Meta:
+        verbose_name = "Чат"
+        verbose_name_plural = "Чаты"
+
     def clean(self):
         if (
-            self.status == "open"
-            and Chat.objects.filter(status="open").exists()
-        ):  # noqa
+            self.is_open == "open"
+            and Chat.objects.filter(status="open").exists()  # noqa
+        ):
             raise ValidationError(
                 "Может существовать только один чат со статусом 'open'."
             )
 
+    # @sync_to_async
     def close_chat(self):
-        if self.status == "open":
-            self.status = "closed"
+        if self.is_open:
+            self.is_open = False
             self.closed_at = timezone.now()
             self.save()
 
@@ -101,7 +106,7 @@ class BotYgpt(models.Model):  # noqa
     )
     promt = models.CharField(  # noqa
         verbose_name="Инструкция к работе",
-        max_length=1024,
+        max_length=2024,
         default="Ты онлайн консультант в чате поддержки пользователей.",
     )
     url_api = models.CharField(
@@ -134,4 +139,4 @@ class ProjectSettings(models.Model):
     )
 
     def __str__(self) -> str:
-        return self.active_bot.bot_name
+        return self.active_bot.bot_name  # noqa
