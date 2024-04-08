@@ -1,6 +1,7 @@
 # Хакатон Vink чат-бот
 
-### Задача: создание MVP backend чат-бота с технологией GPT
+### Задача:
+создание MVP backend чат-бота с технологией GPT
 для интеграции на сайт компании для предоставления консультаций
 по материалам и оборудованию, а также оказания помощи клиентам 24/7.
 
@@ -18,7 +19,7 @@
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
-![YandexGPT](https://disk.yandex.ru/i/71a_XbBKesW6ZQ)
+<img src="https://disk.yandex.ru/i/71a_XbBKesW6ZQ"/>
 <img src="https://img.shields.io/badge/git%20-%23F05033.svg?&style=for-the-badge&logo=git&logoColor=white"/>
 <img src="https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
 <img src="https://img.shields.io/badge/github%20actions%20-%232671E5.svg?&style=for-the-badge&logo=github%20actions&logoColor=white"/>
@@ -48,10 +49,10 @@ docker compose exec -it backend python manage.py createsuperuser
 ```
 вход в админ-зону по эндпоинту `/admin`
 
-выбрав добавить `Bot YGPT` - назначьте имя ассистенту,
+выбрав `добавить Bot YGPT` - назначьте имя ассистенту,
 и заполните необходимые поля для доступа к модели
 
-в разделе `Project settings` выберите дежурного бота, обязательно сохранив ихменения
+в разделе `Project settings` выберите дежурного бота, обязательно сохранив изменения
 
 
 ## Документация API
@@ -94,14 +95,11 @@ python manage.py runserver
 ___
 
 ## Наша команда разработчиков:<br>
-<h4 align="left">Владимир
-Шевченко <a href="https://github.com/vladimir-shevchenko01" target="_blank">
-GitHub</a>  <a href="https://t.me/vsel_live" target="_blank">  🛒</a></h4>
-<br>
-<h4 align="left">Тимофей
-Шевченко <a href="https://github.com/acunathink" target="_blank">
-GitHub</a>  <a href="https://t.me/timofey_the_hiker" target="_blank">  🛒</a></h4>
+<h4 align="left"><a href="https://github.com/vladimir-shevchenko01" target="_blank">
+Владимир Шевченко</a><a href="https://t.me/vsel_live" target="_blank">  🛒</a></h4>
+<h4 align="left"><a href="https://github.com/acunathink" target="_blank">
+Тимофей Карпов</a><a href="https://t.me/timofey_the_hiker" target="_blank">  🛒</a></h4>
 <br>
 <div id="header" align="left">
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGE1cjc1ZXpxc2V1bHV0bXM5bWJ3dTBtem1lZGs3aG0wN3g4aXByMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l46CsTPetihC1rX9K/giphy.gif" width="100"/>
+  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGE1cjc1ZXpxc2V1bHV0bXM5bWJ3dTBtem1lZGs3aG0wN3g4aXByMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l46CsTPetihC1rX9K/giphy.gif" width="200"/>
 </div>
