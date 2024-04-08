@@ -19,10 +19,10 @@
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
-<img src="https://disk.yandex.ru/i/71a_XbBKesW6ZQ"/>
 <img src="https://img.shields.io/badge/git%20-%23F05033.svg?&style=for-the-badge&logo=git&logoColor=white"/>
 <img src="https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
 <img src="https://img.shields.io/badge/github%20actions%20-%232671E5.svg?&style=for-the-badge&logo=github%20actions&logoColor=white"/>
+![YandexGPT](https://github.com/hakaton-vink-furious-six-team/vink-backend/blob/docs/readme/.github/ygpt_logo.png)
 
 ### Как настроить проект для запуска:
 
@@ -95,9 +95,9 @@ python manage.py runserver
 ___
 
 ## Наша команда разработчиков:<br>
-<h4 align="left"><a href="https://github.com/vladimir-shevchenko01" target="_blank">
+- <h4 align="left"><a href="https://github.com/vladimir-shevchenko01" target="_blank">
 Владимир Шевченко</a><a href="https://t.me/vsel_live" target="_blank">  🛒</a></h4>
-<h4 align="left"><a href="https://github.com/acunathink" target="_blank">
+- <h4 align="left"><a href="https://github.com/acunathink" target="_blank">
 Тимофей Карпов</a><a href="https://t.me/timofey_the_hiker" target="_blank">  🛒</a></h4>
 <br>
 <div id="header" align="left">
