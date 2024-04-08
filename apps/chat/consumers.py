@@ -78,4 +78,4 @@ class ChatConsumer(AsyncWebsocketConsumer):
         chat = await Chat.objects.aget(user=room_name, is_open=True)  # noqa
         await sync_to_async(chat.close_chat)()  # noqa
         logger.info(f"WebSocket '/{room_name}' закрыт. результаты чата:"
-                    f" {self.message_list[room_name]}")
+                    f" {self.message_list.pop(room_name)}")
