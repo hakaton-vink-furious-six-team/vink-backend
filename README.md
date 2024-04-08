@@ -19,6 +19,8 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
 ![Daphne](https://img.shields.io/badge/daphne-%230A4A74.svg?style=for-the-badge&logo=daphne&logoColor=white)
+![Django Channels](https://img.shields.io/badge/django%20channels-%23563D7C.svg?style=for-the-badge&logo=django&logoColor=white)
+![openpyxl](https://img.shields.io/badge/openpyxl-%2325A6F0.svg?style=for-the-badge&logo=openpyxl&logoColor=white)
 <img src="https://img.shields.io/badge/git%20-%23F05033.svg?&style=for-the-badge&logo=git&logoColor=white"/>
 ![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
 <img src="https://img.shields.io/badge/github%20actions%20-%232671E5.svg?&style=for-the-badge&logo=github%20actions&logoColor=white"/>
