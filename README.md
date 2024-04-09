@@ -23,8 +23,8 @@
 ![openpyxl](https://img.shields.io/badge/openpyxl-%2325A6F0.svg?style=for-the-badge&logo=openpyxl&logoColor=white)
 <img src="https://img.shields.io/badge/git%20-%23F05033.svg?&style=for-the-badge&logo=git&logoColor=white"/>
 ![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)
-<img src="https://img.shields.io/badge/github%20actions%20-%232671E5.svg?&style=for-the-badge&logo=github%20actions&logoColor=white"/>
 <img src="https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
+<img src="https://img.shields.io/badge/github%20actions%20-%232671E5.svg?&style=for-the-badge&logo=github%20actions&logoColor=white"/>
 ![YandexGPT](https://github.com/hakaton-vink-furious-six-team/vink-backend/blob/docs/readme/.github/ygpt_logo.png)
 
 ### Как настроить проект для запуска:

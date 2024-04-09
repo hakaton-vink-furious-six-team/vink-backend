@@ -3,6 +3,7 @@ version: '3.3'
 volumes:
   pg_data:
   static:
+  frontend:
 
 services:
 
@@ -20,12 +21,19 @@ services:
     depends_on:
       - db
 
+  frontend:
+    env_file: .env
+    image: acunathink/vink_frontend
+    volumes:
+      - frontend:/app/result_build/
+
   nginx:
     image: acunathink/vink_gateway
     env_file: .env
     volumes:
+      - frontend:/usr/share/nginx/html/
       - static:/backend/
     depends_on:
       - backend
     ports:
-      - 80:80
+      - 8000:80
