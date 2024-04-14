@@ -1,21 +1,17 @@
 from aiohttp import ClientSession
 
-# from apps.chat.models import ProjectSettings
 import requests
-
+from environs import Env
+env = Env()
+env.read_env()
 
 SORRY_TEXT = (
     "Извините, но в настоящий момент все операторы заняты, "
     "обратитесь пожалуйста позднее."
 )
-YGPT_API_KEY = "AQVN3w8RT5FZ9zjc1clPFoV6hhJTAo76pg4FyIUv"  # noqa
-CATALOG_ID = "b1gqr96555efj5p78okn"
-PRO = "/yandexgpt/latest"  # noqa
-LITE = "/yandexgpt-lite/latest"  # noqa
-MODEL_URI = "gpt://" + CATALOG_ID + LITE
-URL_COMPL = (
-    "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"  # noqa
-)
+YGPT_API_KEY = env("YGPT_API_KEY")
+MODEL_URI = env("MODEL_URI")
+URL_COMPL = env("URL_COMPL")
 
 
 async def get_gpt_answer(message):
